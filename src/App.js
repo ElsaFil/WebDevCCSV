@@ -37,15 +37,33 @@ class App extends React.Component {
   };
 
   findResults = (inputSphere, inputCylinder, inputAddition) => {
-    if (!inputSphere) {
-      this.setState({ results: result.data });
-      return;
+    let filtered = result.data;
+    if (inputSphere) {
+      filtered = filtered.filter(product => {
+        return (
+          product.maxSphere >= inputSphere && product.minSphere <= inputSphere
+        );
+      });
     }
-    let filtered = result.data.filter(product => {
-      return (
-        product.maxSphere >= inputSphere && product.minSphere <= inputSphere
-      );
-    });
+
+    if (inputCylinder) {
+      filtered = filtered.filter(product => {
+        return (
+          product.maxCylinder >= inputCylinder &&
+          product.minCylinder <= inputCylinder
+        );
+      });
+    }
+
+    if (inputAddition) {
+      filtered = filtered.filter(product => {
+        return (
+          product.maxAddition >= inputAddition &&
+          product.minAddition <= inputAddition
+        );
+      });
+    }
+
     this.setState({ results: filtered });
   };
 
